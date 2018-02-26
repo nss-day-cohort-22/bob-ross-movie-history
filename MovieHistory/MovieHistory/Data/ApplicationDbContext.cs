@@ -14,20 +14,11 @@ namespace MovieHistory.Data
             : base(options)
         { }
 
-<<<<<<< HEAD
-        public ApplicationDbContext(DbSet<Movie> movie)
-        {
-            Movie = movie;
-        }
 
-        public DbSet<Movie> Movie {get; set; }
-        public DbSet<MovieUser> MovieUser { get; set; }
-        public DbSet<Recommendation> Recommendation { get; set; }
-=======
             public DbSet<Movie> Movie { get; set; }
             public DbSet<MovieUser> MovieUser { get; set; }
             public DbSet<Recommendation> Recommendation { get; set;  }
->>>>>>> upstream/master
+
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
