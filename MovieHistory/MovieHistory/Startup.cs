@@ -11,6 +11,7 @@ using Microsoft.Extensions.DependencyInjection;
 using MovieHistory.Data;
 using MovieHistory.Models;
 using MovieHistory.Services;
+using AspNetCoreInjectConfigurationRazor.Configuration;
 
 namespace MovieHistory
 {
@@ -35,6 +36,12 @@ namespace MovieHistory
 
             // Add application services.
             services.AddTransient<IEmailSender, EmailSender>();
+
+          //  services.Configure<ApplicationConfigurations>(
+          //Configuration.GetSection("ApplicationConfigurations"));
+
+            services.Configure<ApplicationConfigurations>(
+                options => Configuration.GetSection("ApplicationConfigurations").Bind(options));
 
             services.AddMvc();
         }
