@@ -19,7 +19,6 @@ namespace MovieHistory.Data
         public DbSet<MovieUser> MovieUser { get; set; }
         public DbSet<Recommendation> Recommendation { get; set; }
 
-
         protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);
