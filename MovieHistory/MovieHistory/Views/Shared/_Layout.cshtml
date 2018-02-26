@@ -30,9 +30,12 @@
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
-                    <li><a asp-area="" asp-controller="Home" asp-action="Index">Home</a></li>
-                    <li><a asp-area="" asp-controller="Home" asp-action="About">About</a></li>
-                    <li><a asp-area="" asp-controller="Home" asp-action="Contact">Contact</a></li>
+                    <li>
+                        <input type="text" placeholder="Search for movies!!!" id="movieSearch" />
+                    </li>
+                    <li>
+                        <button id="movieSearch__button">Search</button>
+                    </li>
                 </ul>
                 @await Html.PartialAsync("_LoginPartial")
             </div>
