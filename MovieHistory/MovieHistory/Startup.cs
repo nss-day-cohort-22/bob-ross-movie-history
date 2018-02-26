@@ -37,9 +37,19 @@ namespace MovieHistory
             // Add application services.
             services.AddTransient<IEmailSender, EmailSender>();
 
-            services.Configure<ApplicationConfigurations>(Configuration.GetSection("AppSettings"));
+            services.Configure<ApplicationConfigurations>(Configuration.GetSection("ApplicationConfigurations"));
 
             services.AddMvc();
+
+
+            services.AddSingleton<IApplicationConfigurations, ApplicationConfigurations>(
+                e => Configuration.GetSection(nameof(ApplicationConfigurations))
+                        .Get<ApplicationConfigurations>());
+
+
+
+
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
