@@ -12,12 +12,11 @@ namespace MovieHistory.Data
     {
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
             : base(options)
-        {
-        }
+        { }
 
-        public DbSet<Movie> Movie { get; set; }
-        public DbSet<MovieUser> MovieUser { get; set; }
-        public DbSet<Recommendation> Recommendation { get; set; }
+            public DbSet<Movie> Movie { get; set; }
+            public DbSet<MovieUser> MovieUser { get; set; }
+            public DbSet<Recommendation> Recommendation { get; set;  }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {

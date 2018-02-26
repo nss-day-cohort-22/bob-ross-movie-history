@@ -1,17 +1,18 @@
-﻿// Write your JavaScript code.
-
-$("#movieSearch__button").click(evt => {
+﻿$("#movieSearch__button").click(evt => {
     const userSearchString = $("#movieSearch").val()
-
-    let keywords = userSearchString.replace(/ {2}/g, "+").replace(/ /g, "+")
-
-    let movieString = "http://www.omdbapi.com/?apikey=7bdab718&s=" + keywords
-
     $.ajax({
-        "url": movieString,
-        "method": "GET"
-    }).then(result => {
-        console.log(result)
-    })
+        method: "GET",
+        url: `https://api.themoviedb.org/3/search/movie?api_key=6cc5adb954efa8ba18b1ed8d19b4b1bf&language=en-US&query=${userSearchString}&page=1&include_adult=false`
+    }).then(res => {
+        let titles = ""
+        res.results.forEach(m => {
+            titles += `
+                <h2>${m.title}</h2>
+                <img src="https://image.tmdb.org/t/p/w154${m.poster_path}" />
+            `
+        })
 
+        $("#movieGrid").html(titles)
+    })
 });
+
