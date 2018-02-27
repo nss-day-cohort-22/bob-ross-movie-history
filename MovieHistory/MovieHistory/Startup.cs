@@ -11,7 +11,6 @@ using Microsoft.Extensions.DependencyInjection;
 using MovieHistory.Data;
 using MovieHistory.Models;
 using MovieHistory.Services;
-using AspNetCoreInjectConfigurationRazor.Configuration;
 
 namespace MovieHistory
 {
@@ -37,11 +36,13 @@ namespace MovieHistory
             // Add application services.
             services.AddTransient<IEmailSender, EmailSender>();
 
-          //  services.Configure<ApplicationConfigurations>(
-          //Configuration.GetSection("ApplicationConfigurations"));
-
-            services.Configure<ApplicationConfigurations>(
-                options => Configuration.GetSection("ApplicationConfigurations").Bind(options));
+            /**
+                Create a service for DI that will return the ApplicationConfiguration
+                section of appsettings.
+             */
+            services.AddSingleton<IApplicationConfiguration, ApplicationConfiguration>(
+                e => Configuration.GetSection("ApplicationConfiguration")
+                        .Get<ApplicationConfiguration>());
 
             services.AddMvc();
         }
