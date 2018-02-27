@@ -1,4 +1,4 @@
-﻿@inject MovieHistory.Services.IApplicationConfigurations AppSettings;
+﻿@inject MovieHistory.Services.IApplicationConfiguration AppSettings;
 
 <!DOCTYPE html>
 <html>
@@ -52,12 +52,17 @@
     </div>
 
     <environment include="Development">
+        <script type="text/javascript">
+            const moviedb = Object.create(null, {
+                "key": {
+                    get: () => '@AppSettings.MovieAPIKey'
+                }
+            })
+            Object.freeze(moviedb)
+        </script>
         <script src="~/lib/jquery/dist/jquery.js"></script>
         <script src="~/lib/bootstrap/dist/js/bootstrap.js"></script>
         <script src="~/js/site.js" asp-append-version="true"></script>
-        <script type="text/javascript">
-            const key = '@AppSettings.MovieAPIKey';
-        </script>
     </environment>
     <environment exclude="Development">
         <script src="https://ajax.aspnetcdn.com/ajax/jquery/jquery-2.2.0.min.js"

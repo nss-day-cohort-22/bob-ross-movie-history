@@ -2,11 +2,11 @@
     const userSearchString = $("#movieSearch").val()
     $.ajax({
         method: "GET",
-        url: `https://api.themoviedb.org/3/search/movie?api_key=6cc5adb954efa8ba18b1ed8d19b4b1bf&language=en-US&query=${userSearchString}&page=1&include_adult=false`
+        url: `https://api.themoviedb.org/3/search/movie?api_key=${moviedb.key}&language=en-US&query=${userSearchString}&page=1&include_adult=false`
     }).then(res => {
         let titles = "<div class='row'>"
         res.results.forEach((m, idx) => {
-            
+
             titles += `
                 <div class="col-md-3 movieGrid__movie">
                     <h2>${m.title}</h2>

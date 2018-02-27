@@ -5,8 +5,9 @@ using System.Threading.Tasks;
 
 namespace MovieHistory.Services
 {
-    public interface IApplicationConfigurations
+    public class ApplicationConfiguration: IApplicationConfiguration
     {
-        string MovieAPIKey { get; set; }
+        public string MovieAPIKey { get; set; }
+
     }
 }
