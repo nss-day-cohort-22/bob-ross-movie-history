@@ -1,4 +1,4 @@
-﻿const movieCollection = Symbol()
+﻿const movieCollection = Symbol()  // Super const
 
 
 const MovieStore = Object.create(null, {

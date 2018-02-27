@@ -1,8 +1,8 @@
 ﻿$("#movieGrid").on("click", evt => {
     const apiId = evt.target.parentElement.id.split("--")[1]
-    console.log(MovieStore.movies.find(m => parseInt(apiId) === m.id))
+    const movie = MovieStore.movies.find(m => parseInt(apiId) === m.id)
 
-    //window.location = `/Movie/Track/?apiId=${evt.target.parentElement.id.split("--")[1]}`
+    window.location = `/Movie/Track/?apiId=${movie.id}&title=${movie.title}&img=${movie.poster_path}`
 })
 
 $("#movieSearch__button").click(evt => {
@@ -17,8 +17,8 @@ $("#movieSearch__button").click(evt => {
 
             titles += `
                 <div class="col-md-3 movieGrid__movie" id="movie--${m.id}">
-                    <h2>${m.title}</h2>
-                    <img src="https://image.tmdb.org/t/p/w154${m.poster_path}" />
+                    <h2 class="fakeLink">${m.title}</h2>
+                    <img class="fakeLink" src="https://image.tmdb.org/t/p/w154${m.poster_path}" />
                 </div>
             `
             if ((idx + 1) % 4 === 0) {
