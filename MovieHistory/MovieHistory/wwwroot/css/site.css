@@ -33,3 +33,7 @@
         display: none;
     }
 }
+
+.fakeLink:hover {
+    cursor: pointer;
+}
