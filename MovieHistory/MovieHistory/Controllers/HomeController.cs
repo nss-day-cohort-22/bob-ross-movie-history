@@ -6,18 +6,18 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using MovieHistory.Models;
 using Microsoft.Extensions.Configuration;
-using MovieHistory.Configuration;
+using MovieHistory.Services;
 using Microsoft.Extensions.Options;
 
 namespace MovieHistory.Controllers
 {
     public class HomeController : Controller
     {
-        private readonly ApplicationConfigurations _appSettings;
+        private readonly IApplicationConfiguration _appSettings;
 
-        public HomeController(IOptions<ApplicationConfigurations> appSettings)
+        public HomeController(IApplicationConfiguration appSettings)
         {
-            _appSettings = appSettings.Value;
+            _appSettings = appSettings;
         }
 
         public IActionResult Index()

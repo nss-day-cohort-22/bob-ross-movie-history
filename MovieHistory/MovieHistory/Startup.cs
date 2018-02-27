@@ -11,7 +11,6 @@ using Microsoft.Extensions.DependencyInjection;
 using MovieHistory.Data;
 using MovieHistory.Models;
 using MovieHistory.Services;
-using MovieHistory.Configuration;
 
 namespace MovieHistory
 {
@@ -28,7 +27,7 @@ namespace MovieHistory
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddDbContext<ApplicationDbContext>(options =>
-                options.UseSqlite(Configuration.GetConnectionString("DefaultConnection")));
+                options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
 
             services.AddIdentity<ApplicationUser, IdentityRole>()
                 .AddEntityFrameworkStores<ApplicationDbContext>()
@@ -37,19 +36,15 @@ namespace MovieHistory
             // Add application services.
             services.AddTransient<IEmailSender, EmailSender>();
 
-            services.Configure<ApplicationConfigurations>(Configuration.GetSection("ApplicationConfigurations"));
+            /**
+                Create a service for DI that will return the ApplicationConfiguration
+                section of appsettings.
+             */
+            services.AddSingleton<IApplicationConfiguration, ApplicationConfiguration>(
+                e => Configuration.GetSection("ApplicationConfiguration")
+                        .Get<ApplicationConfiguration>());
 
             services.AddMvc();
-
-
-            services.AddSingleton<IApplicationConfigurations, ApplicationConfigurations>(
-                e => Configuration.GetSection(nameof(ApplicationConfigurations))
-                        .Get<ApplicationConfigurations>());
-
-
-
-
-
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
