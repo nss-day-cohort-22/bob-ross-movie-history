@@ -1,9 +1,11 @@
+
 ﻿$("#movieGrid").on("click", evt => {
     const apiId = evt.target.parentElement.id.split("--")[1]
     const movie = MovieStore.movies.find(m => parseInt(apiId) === m.id)
 
     window.location = `/Movie/Track/?apiId=${movie.id}&title=${movie.title}&img=${movie.poster_path}`
 })
+
 
 $("#movieSearch__button").click(evt => {
     const userSearchString = $("#movieSearch").val()

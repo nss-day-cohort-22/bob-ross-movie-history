@@ -220,12 +220,7 @@ namespace MovieHistory.Controllers
             ViewData["ReturnUrl"] = returnUrl;
             if (ModelState.IsValid)
             {
-                var user = new ApplicationUser {
-                    UserName = model.Email,
-                    Email = model.Email,
-                    FirstName = model.FirstName,
-                    LastName = model.LastName
-                };
+                ApplicationUser user = NewMethod(model);
                 var result = await _userManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
                 {
@@ -244,6 +239,16 @@ namespace MovieHistory.Controllers
 
             // If we got this far, something failed, redisplay form
             return View(model);
+        }
+
+        private static ApplicationUser NewMethod(RegisterViewModel model)
+        {
+            return NewMethod1(model);
+        }
+
+        private static ApplicationUser NewMethod1(RegisterViewModel model)
+        {
+            return new ApplicationUser { UserName = model.Email, Email = model.Email, FirstName = model.FirstName, LastName = model.LastName };
         }
 
         [HttpPost]
