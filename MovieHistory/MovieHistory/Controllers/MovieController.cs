@@ -10,6 +10,8 @@ using MovieHistory.Services;
 using Microsoft.Extensions.Options;
 using MovieHistory.Data;
 using Microsoft.AspNetCore.Identity;
+using MovieHistory.Models.MovieViewModels;
+using Microsoft.EntityFrameworkCore;
 
 namespace MovieHistory.Controllers
 {
@@ -31,6 +33,8 @@ namespace MovieHistory.Controllers
 
         public async Task<IActionResult> Track(string apiId, string title, string img)
         {
+            var model = new TrackedMoviesViewModel();
+
             //add movie to database
             Movie movie = new Movie
             {
@@ -55,7 +59,22 @@ namespace MovieHistory.Controllers
             _context.Add(trackMovie);
             await _context.SaveChangesAsync();
 
-            return View();
+
+            model.TrackedUserMovies = (from m in _context.Movie
+                                      join mu in _context.MovieUser
+                                        on m.MovieId equals mu.MovieId
+                                      where mu.User == _user
+                                      select new TrackedMovie
+                                      {
+                                          MovieUserId = mu.MovieUserId,
+                                          Title = m.Title,
+                                          ImageURL = m.ImgUrl,
+                                          Genre = mu.Genre,
+                                          Favorited = mu.Favorited,
+                                          Watched = mu.Watched
+                                      }).ToList();
+
+            return View(model);
         }
 
         public IActionResult About()
