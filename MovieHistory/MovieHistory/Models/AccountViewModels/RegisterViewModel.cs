@@ -25,7 +25,7 @@ namespace MovieHistory.Models.AccountViewModels
         public string ConfirmPassword { get; set; }
 
         [Required]
-        [Display(Name ="First Name")]
+        [Display(Name = "First Name")]
         [StringLength(55, ErrorMessage = "Please enter your nickname")]
         public string FirstName { get; set; }
 
@@ -33,6 +33,5 @@ namespace MovieHistory.Models.AccountViewModels
         [Display(Name = "Last Name")]
         [StringLength(55, ErrorMessage = "Sorry, too long")]
         public string LastName { get; set; }
-
     }
 }

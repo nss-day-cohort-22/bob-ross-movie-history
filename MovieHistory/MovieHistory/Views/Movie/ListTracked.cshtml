@@ -1,0 +1,23 @@
+﻿@model MovieHistory.Models.MovieViewModels.TrackedMoviesViewModel
+
+<h1>Yay! You tracked a movie!</h1>
+
+<div id="movieGrid" class="container-fluid">
+
+    @foreach (var trackedMovie in Model.TrackedUserMovies)
+    {
+        <div class='row'>
+            <div class="col-md-3 movieGrid__movie" 
+                 id="movie--@Html.DisplayFor(modelItem => trackedMovie.MovieUserId)">
+                
+                <h2 class="fakeLink">@Html.DisplayFor(modelItem => trackedMovie.Title)</h2>
+                <img class="fakeLink" 
+                     src="https://image.tmdb.org/t/p/w154/@Html.DisplayFor(modelItem => trackedMovie.ImageURL)" />
+            </div>
+        </div>
+    }
+
+</div>
+
+
+
