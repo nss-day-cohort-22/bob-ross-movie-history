@@ -31,9 +31,25 @@ namespace MovieHistory.Controllers
         // This task retrieves the currently authenticated user
         private Task<ApplicationUser> GetCurrentUserAsync() => _userManager.GetUserAsync(HttpContext.User);
 
+        public async Task<IActionResult> ListTracked ()
+        {
+            ApplicationUser user = await GetCurrentUserAsync();
+
+            var model = new TrackedMoviesViewModel();
+            model.TrackedUserMovies = GetUserTrackedMovies(user);
+
+            return View(model);
+        }
+
         public async Task<IActionResult> Track(string apiId, string title, string img)
         {
-            var model = new TrackedMoviesViewModel();
+            //gets the current user
+            ApplicationUser user = await GetCurrentUserAsync();
+
+            if (IsMovieTracked(Int32.Parse(apiId), user))
+            {
+                return RedirectToActionPermanent("ListTracked");
+            }
 
             //add movie to database
             Movie movie = new Movie
@@ -45,13 +61,11 @@ namespace MovieHistory.Controllers
 
             _context.Add(movie);
 
-            //gets the current user
-            ApplicationUser _user = await GetCurrentUserAsync();
 
             //track that movie for the current user
             var trackMovie = new MovieUser
             {
-                User = _user,
+                User = user,
                 MovieId = movie.MovieId
             };
 
@@ -59,22 +73,30 @@ namespace MovieHistory.Controllers
             _context.Add(trackMovie);
             await _context.SaveChangesAsync();
 
+            return RedirectToActionPermanent("ListTracked");
+        }
 
-            model.TrackedUserMovies = (from m in _context.Movie
-                                      join mu in _context.MovieUser
-                                        on m.MovieId equals mu.MovieId
-                                      where mu.User == _user
-                                      select new TrackedMovie
-                                      {
-                                          MovieUserId = mu.MovieUserId,
-                                          Title = m.Title,
-                                          ImageURL = m.ImgUrl,
-                                          Genre = mu.Genre,
-                                          Favorited = mu.Favorited,
-                                          Watched = mu.Watched
-                                      }).ToList();
+        public ICollection<TrackedMovie> GetUserTrackedMovies (ApplicationUser user)
+        {
+            return (from m in _context.Movie
+             join mu in _context.MovieUser
+               on m.MovieId equals mu.MovieId
+             where mu.User == user
+             select new TrackedMovie
+             {
+                 MovieUserId = mu.MovieUserId,
+                 Title = m.Title,
+                 ImageURL = m.ImgUrl,
+                 Genre = mu.Genre,
+                 Favorited = mu.Favorited,
+                 Watched = mu.Watched
+             }).ToList();
+        }
 
-            return View(model);
+        public bool IsMovieTracked (int movieId, ApplicationUser userId)
+        {
+
+            return false;
         }
 
         public IActionResult About()
