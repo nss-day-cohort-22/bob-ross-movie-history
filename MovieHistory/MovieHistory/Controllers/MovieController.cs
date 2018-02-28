@@ -93,10 +93,19 @@ namespace MovieHistory.Controllers
              }).ToList();
         }
 
-        public bool IsMovieTracked (int movieId, ApplicationUser userId)
+        public bool IsMovieTracked (int movieId, ApplicationUser user)
         {
+            var isTracked = _context.MovieUser
+                .Include("Movie")
+                .Where(mu => mu.Movie.ApiId == movieId && mu.User == user)
+                .FirstOrDefault();
 
-            return false;
+            if (isTracked == null)
+            {
+                return false;
+            }
+
+            return true;
         }
 
         public IActionResult About()
