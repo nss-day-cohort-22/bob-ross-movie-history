@@ -108,9 +108,16 @@ namespace MovieHistory.Controllers
             return true;
         }
 
-        public IActionResult About()
+        public async Task<IActionResult> Update([FromRoute] int id, TrackedMovie trackedMovie)
         {
-            ViewData["Message"] = "Your application description page.";
+            var userMovie = _context.MovieUser.Single(m => m.MovieUserId == id);
+
+            userMovie.Favorited = trackedMovie.Favorited;
+            userMovie.Genre = trackedMovie.Genre;
+            userMovie.Watched = trackedMovie.Watched;
+
+            _context.Update(userMovie);
+            await _context.SaveChangesAsync();
 
             return View();
         }

@@ -6,13 +6,19 @@
 
     @foreach (var trackedMovie in Model.TrackedUserMovies)
     {
-        <div class='row'>
-            <div class="col-md-3 movieGrid__movie" 
+        <div class="row">
+            <div class="col-md-3 movieGrid__movie"
                  id="movie--@Html.DisplayFor(modelItem => trackedMovie.MovieUserId)">
-                
+
                 <h2 class="fakeLink">@Html.DisplayFor(modelItem => trackedMovie.Title)</h2>
-                <img class="fakeLink" 
+                <img class="fakeLink"
                      src="https://image.tmdb.org/t/p/w154/@Html.DisplayFor(modelItem => trackedMovie.ImageURL)" />
+
+                <form asp-action="Update" asp-route-id="@trackedMovie.MovieUserId" method="post">
+                    <div>Favorited: @Html.CheckBoxFor(modelItem => trackedMovie.Favorited)</div>
+                    <div><input asp-for="@trackedMovie.Genre"></div>
+                    <div>Watched: @Html.CheckBoxFor(modelItem => trackedMovie.Watched)</div>
+                </form>
             </div>
         </div>
     }
